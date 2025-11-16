@@ -1,22 +1,20 @@
 package ucu.edu.ua;
 
-public class TimedDocument extends DocumentDecorator {
-    static final double CONVERT_TO_MS = 1_000_000_000.0;
-
+public class TimedDocument extends AbstractDocumentDecorator {
     public TimedDocument(Document document) {
         super(document);
     }
 
-    public String parse(String path) {
-        long startTime = System.nanoTime();
+    @Override
+    public String parse() {
+        long startTime = System.currentTimeMillis();
 
-        String result =  super.parse(path);
+        String result = super.parse();
 
-        long endTime = System.nanoTime();
-        long elapsedTime = endTime - startTime;
-        System.out.println(
-                "Elapsed time in nanoseconds: " + elapsedTime/CONVERT_TO_MS
-        );
+        long endTime = System.currentTimeMillis();
+        long duration = endTime - startTime;
+
+        System.out.println("Document parsing time: " + duration + " ms");
 
         return result;
     }
